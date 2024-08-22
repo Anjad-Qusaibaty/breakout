@@ -7,6 +7,11 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="stylesheet.css" />
+    <script
+      src="https://kit.fontawesome.com/824bb260f5.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet" />
   </head>
   <body>
     <div class="top">
@@ -18,7 +23,31 @@
     </div>
     <button id="start-button">Start Game</button>
     <button id="play-again">Play Again</button>
+    <form id="block-row-form">
+      <label for="numBlockRow">Choose the number of block rows:</label>
+      <select id="numBlockRow" name="numBlockRow">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5" selected>5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+    </form>
 
+    <label for="sound-toggle"
+      ><i class="fas fa-volume-up" id="sound-icon"></i
+    ></label>
+    <input type="checkbox" id="sound-toggle" checked />
+
+    <audio id="racket-hit-sound" src="racket-hit.mp3"></audio>
+    <audio id="block-break-sound" src="block-break.mp3"></audio>
+    <audio id="game-over" src="game-over.mp3"></audio>
+    <audio id="win" src="win.mp3"></audio>
     <div class="grid"></div>
     <script src="app.js" async defer></script>
   </body>

@@ -7,7 +7,6 @@ const racketWidth = 100;
 const racketHeight = 20;
 const racketInitialX = gridWidth / 2 - racketWidth / 2;
 const racketInitialY = gridHeight - racketHeight;
-const racketMove = 25;
 const ballDiameter = 20;
 let numBlockRow = 5;
 const ballInitialX = gridWidth / 2 - ballDiameter / 2;
@@ -21,6 +20,15 @@ let xMovement = 2;
 let yMovement = 2;
 let coveredArea;
 let blocks;
+const racketMove = numBlockRow * 10;
+// sound effects
+const soundToggle = document.getElementById("sound-toggle");
+const soundIcon = document.getElementById("sound-icon");
+let isSoundEnabled = soundToggle.checked;
+const racketHitSound = document.getElementById("racket-hit-sound");
+const blockBreakSound = document.getElementById("block-break-sound");
+const win = document.getElementById("win");
+const gameOver = document.getElementById("game-over");
 // // Dynamic variables
 let grid = document.querySelector(".grid");
 let startButton = document.getElementById("start-button");
@@ -29,8 +37,22 @@ let msg = document.getElementById("msg");
 let score = document.getElementById("score");
 const racket = document.createElement("div");
 const ball = document.createElement("div");
+let numBlockRowSelector = document.getElementById("numBlockRow");
+let blockRowForm = document.getElementById("block-row-form");
 
 againButton.style.display = "none";
+
+function playSoundForDuration(audio, duration) {
+  if (isSoundEnabled) {
+    audio.currentTime = 0;
+    audio.play();
+
+    setTimeout(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    }, duration * 1000);
+  }
+}
 
 function drawRacket() {
   racket.classList.add("racket");
@@ -117,7 +139,10 @@ function manageGridCollision() {
 
   // Check for collision with floor (racket collision or game over)
   if (ballPosition[1] >= gridHeight - ballDiameter) {
-    clearInterval(gameInterval); // Stop the game
+    clearInterval(gameInterval);
+    if (isSoundEnabled) {
+      gameOver.play();
+    }
     msg.style.color = "darkblue";
     msg.innerHTML = "You lost, game over &#128542";
     ball.style.display = "none";
@@ -133,6 +158,7 @@ function manageRacketCollision() {
     ballPosition[1] + ballDiameter >= racketPosition[1]
   ) {
     yMovement = -2;
+    playSoundForDuration(racketHitSound, 1);
   }
 }
 
@@ -148,12 +174,20 @@ function manageBlockCollision() {
       yMovement = -yMovement;
       initialScore++;
       score.textContent = initialScore;
-      block.element.remove();
+      block.element.classList.add("breaking");
+
+      block.element.addEventListener("animationend", () => {
+        block.element.remove();
+      });
 
       blocks.splice(i, 1);
+      playSoundForDuration(blockBreakSound, 1);
 
       if (blocks.length === 0) {
-        clearInterval(gameInterval); // Stop the game
+        clearInterval(gameInterval);
+        if (isSoundEnabled) {
+          win.play();
+        }
         msg.style.color = "goldenrod";
         msg.innerHTML = "You won, well done! &#128513";
         ball.style.display = "none";
@@ -165,6 +199,8 @@ function manageBlockCollision() {
 }
 
 function gameStartReset() {
+  numBlockRow = parseInt(numBlockRowSelector.value);
+
   // Reset ball position
   drawBall();
   // Reset racket position
@@ -197,3 +233,14 @@ function gameStartReset() {
 document.addEventListener("keydown", moveRacket);
 startButton.addEventListener("click", gameStartReset);
 againButton.addEventListener("click", gameStartReset);
+
+soundToggle.addEventListener("change", () => {
+  isSoundEnabled = soundToggle.checked;
+  if (soundToggle.checked) {
+    soundIcon.classList.remove("fa-volume-mute");
+    soundIcon.classList.add("fa-volume-up");
+  } else {
+    soundIcon.classList.remove("fa-volume-up");
+    soundIcon.classList.add("fa-volume-mute");
+  }
+});

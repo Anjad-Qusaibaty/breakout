@@ -70,3 +70,30 @@
   flex-direction: column;
   gap: 10px;
 }
+
+@keyframes breakBlock {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(0.75);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  75% {
+    transform: scale(0.25);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.block.breaking {
+  animation: breakBlock 0.3s forwards;
+}
