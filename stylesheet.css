@@ -1,0 +1,72 @@
+.grid {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 500px;
+  border: solid black 2px;
+}
+.scoresheet {
+  display: flex;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#score {
+  margin-left: 20px;
+}
+.racket {
+  position: absolute;
+  height: 20px;
+  width: 100px;
+  border-radius: 20px;
+  background-color: red;
+}
+
+.block {
+  position: absolute;
+  height: 20px;
+  width: 75px;
+  border-radius: 20px;
+  background-color: darkblue;
+}
+.ball {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: goldenrod;
+}
+#start-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+}
+#play-again {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+}
+#msg {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
